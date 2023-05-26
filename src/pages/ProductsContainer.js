@@ -27,6 +27,7 @@ class Products extends React.Component {
   }
 
   componentDidMount () {
+    document.title = 'iQuanti (Products)'
     this.props.FetchProducts()
   }
 
