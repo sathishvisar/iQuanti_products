@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-export const fetchProducts = async () => {
+export const fetchProducts = async (url = 'https://dev1api.credello.com/static-products') => {
   try {
     await delay(1000);
-    const response = await axios.get('https://dev1api.credello.com/static-products');
+    const response = await axios.get(url);
 
     return [response?.data, null];
     
