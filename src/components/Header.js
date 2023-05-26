@@ -4,7 +4,7 @@ import "./Header.scss"
 
 import React, { useState, useEffect } from 'react';
 
-const Header = () => {
+const Header = (props) => {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,9 @@ const Header = () => {
 
   return (
     <header className={classNames('header',isSticky ? 'sticky-header' : '')}>
-      <DropDownMenu />
+      <DropDownMenu 
+        selectedOption={props.selectedOption} 
+        handleFilterChange={props.handleFilterChange}/>
     </header>
   );
 };

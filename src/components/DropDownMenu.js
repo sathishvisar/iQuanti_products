@@ -3,10 +3,10 @@ import "./DropDownMenu.scss"
 
 import IconDone from "./icons/IconDone"
 
-const DropDownMenu = () => {
+const DropDownMenu = (props) => {
+  const {selectedOption, handleFilterChange} = props;
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [selectedOption, setSelectedOption] = useState('Monthly Payment');
 
   const options = [
     'APR Min',
@@ -20,7 +20,7 @@ const DropDownMenu = () => {
   };
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    handleFilterChange(option)
     setIsOpen(false);
   };
 

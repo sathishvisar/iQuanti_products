@@ -10,13 +10,53 @@ import Header from '../components/Header'
 import './ProductContainer.scss'
 
 class Products extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedOption: 'Monthly Payment',
+    };
+
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+  }
+
+  handleFilterChange(value){
+    this.setState({
+      selectedOption: value
+    })
+  }
+
   componentDidMount(){
       this.props.fetch_products()
+  }
+
+  renderFilteredProducts() {
+    const { productsData } = this.props;
+
+    if (!productsData) {
+      return null;
+    }
+
+    // Sort the productsData array based on the sortKey
+    const sortedProducts = productsData.slice().sort((a, b) => {
+      if(this.state.selectedOption === 'APR Min'){
+        return a['apr']['min'] - b['apr']['min']
+      }else if(this.state.selectedOption === 'APR Max'){
+        return a['apr']['max'] - b['apr']['max']
+      }else if(this.state.selectedOption === 'Origination Fee'){
+        return a['origination_fee']['min'] - b['origination_fee']['min']
+      }
+       return a - b
+    });
+
+    return sortedProducts.map((item, index) => (
+      <Product product={item} key={index} />
+    ));
   }
   render() {
     return <div className='product-container'>
 
-      <Header />
+      <Header selectedOption={this.state.selectedOption} handleFilterChange={this.handleFilterChange}/>
 
       {this.props?.productsLoading ? (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -24,11 +64,7 @@ class Products extends React.Component {
         </div>
       ) : (
         <Grid container maxWidth="lg" className='product-list'>
-          {
-            this.props?.productsData?.map((item, index) => (
-              <Product product={item} key={index}/>
-            ))
-          }
+          {this.renderFilteredProducts()}
         </Grid>
       )}
 

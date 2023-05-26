@@ -46,16 +46,16 @@ const Product = (props) => {
           <div className='lists'>
             <ul>
               {isExpend ? (
-                pros.map((pro) => <li key={pro}><IconDone style={2} color="#6d7f87"/> {pro}</li>)
+                pros.map((pro) => <li key={pro}><IconDone type={2} color="#6d7f87"/> {pro}</li>)
               ) : (
-                <li><IconDone style={2} color="#6d7f87"/> {pros[0]}</li>
+                <li><IconDone type={2} color="#6d7f87"/> {pros[0]}</li>
               )}
             </ul>
             <ul>
               {isExpend ? (
-                cons.map((con) => <li key={con}><IconDone style={2} color="#6d7f87"/> {con}</li>)
+                cons.map((con) => <li key={con}><IconDone type={2} color="#6d7f87"/> {con}</li>)
               ) : (
-                <li><IconDone style={2}  color="#6d7f87"/> {cons[0]}</li>
+                <li><IconDone type={2}  color="#6d7f87"/> {cons[0]}</li>
               )}
             </ul>
           </div>
