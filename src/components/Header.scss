@@ -1,0 +1,12 @@
+.header {
+    background: #0259AB 0% 0% no-repeat padding-box;
+    height: 60px;
+
+    &.sticky-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+      }
+}

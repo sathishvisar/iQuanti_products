@@ -1,0 +1,24 @@
+.product {
+    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 3px 17px 13px #00000017;
+    border-radius: 10px;
+    opacity: 1;
+    margin-bottom: 24px;
+    width: 100%;
+    padding: 24px;
+
+    .pros-cons {
+        
+        .lists {
+            display: flex;
+            ul {
+                li {
+                    list-style: none;
+                    text-align: left;
+                    display: flex;
+                }
+            }
+        }
+    }
+}
