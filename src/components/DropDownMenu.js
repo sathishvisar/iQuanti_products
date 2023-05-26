@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import "./DropDownMenu.scss"
 
-import IconDone from "./icons/IconDone"
+import IconArrowDown from "./icons/IconArrowDown"
+import IconDoneBold from "./icons/IconDoneBold"
 
 const DropDownMenu = (props) => {
-  const {selectedOption, handleFilterChange} = props;
+  const { selectedOption, handleFilterChange } = props;
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -40,13 +41,13 @@ const DropDownMenu = (props) => {
   return (
     <div className="dropdown" ref={dropdownRef}>
       <span className="dropdown-button" onClick={toggleDropdown}>
-        Toggle Dropdown
+        Sort by <IconArrowDown width={10} height={10} color={'#fff'} />
       </span>
       {isOpen && (
         <ul className="dropdown-menu">
           {options.map((option, index) => (
             <li key={index} onClick={() => handleOptionClick(option)}>
-              {selectedOption === option && <IconDone />} {option}
+              {selectedOption === option && <IconDoneBold />} {option}
             </li>
           ))}
         </ul>
