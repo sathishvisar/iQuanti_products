@@ -1,1 +1,0 @@
-# iQuanti_products
