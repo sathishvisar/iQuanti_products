@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import Grid from '@mui/material/Grid';
 import IconDone from "./icons/IconDone"
+import IconClose from "./icons/IconClose"
+import IconAskQuestion from "./icons/IconAskQuestion"
 import CustomButton from "./shared/CustomButton"
 
 import './Product.scss'
@@ -28,70 +30,70 @@ const Product = (props) => {
           alt={product.lender_name}
           loading="lazy"
         />
-        <CustomButton variant="contained" text={"Get Offer"} fullWidth/>
-        <span className='btn-label'>on Credello</span>
+        <CustomButton variant="contained" text={"Get Offer"} label="on Credello" fullWidth/>
       </Grid>
 
       <Grid item xs={8} className="col-right">
         <Grid className='metrics'>
-          <span>{product?.apr?.min}% - {product?.apr?.max}%</span>
-          <span>$500</span>
-          <span>{product?.origination_fee?.min}</span>
+          <CustomButton variant="contained" color="secondary" text={`${product?.apr?.min}% - ${product?.apr?.max}%`} label="Est. APR Range"/>
+          <CustomButton variant="contained" color="secondary" text={"$500"} label="Mo. Payment"/>
+          <CustomButton variant="contained" color="secondary" text={product?.origination_fee?.min} label="Origination Fee"/>
         </Grid>
 
         <Grid className='good-for'>
-          <h3>Good For: {product?.best_for}</h3>
+          <h3><span className='high-light'>Good For:</span> {product?.best_for}</h3>
         </Grid>
 
         <Grid className='pros-cons'>
-          <h3>Pros & Cons</h3>
+          <h3><span className='high-light'>Pros & Cons</span></h3>
           <div className='lists'>
             <ul>
               {isExpend ? (
-                pros.map((pro) => <li key={pro}><IconDone type={2} color="#6d7f87"/> {pro}</li>)
+                pros.map((pro) => <li key={pro}><IconDone color="#6d7f87"/> <span>{pro}</span></li>)
               ) : (
-                <li><IconDone type={2} color="#6d7f87"/> {pros[0]}</li>
+                <li><IconDone color="#6d7f87"/><span>{pros[0]}</span></li>
               )}
             </ul>
             <ul>
               {isExpend ? (
-                cons.map((con) => <li key={con}><IconDone type={2} color="#6d7f87"/> {con}</li>)
+                cons.map((con) => <li key={con}><IconClose color="#6d7f87"/> <span>{con}</span></li>)
               ) : (
-                <li><IconDone type={2}  color="#6d7f87"/> {cons[0]}</li>
+                <li><IconClose  color="#6d7f87"/> <span>{cons[0]}</span></li>
               )}
             </ul>
           </div>
         </Grid>
 
-        
         {
           isExpend && (<>
+            <hr/>
             <Grid className='qualification-requirements'>
               <h3>Qualification Requirements</h3>
               <div>
-                <span>Min. Credit Score: {product?.detailed_info?.min_credit_score}</span>
-                <span>Max. DTI ratio: {product?.detailed_info?.max_debt_income_ratio}</span>
+                <span className='label'>Min. Credit Score:</span> <span className='value'>{product?.detailed_info?.min_credit_score}</span>
+                <span className='label'>Max. DTI ratio:<IconAskQuestion /></span> <span className='value'>{product?.detailed_info?.max_debt_income_ratio}</span>
               </div>
             </Grid>
+            <hr/>
             <Grid className='fees-penality'>
               <h3>Fees & Penality</h3>
               <div>
-                <span>Late Penalties: {product?.detailed_info?.late_penalties}</span>
-                <span>Prepayment Fees: {product?.detailed_info?.prepayment_fee}</span>
-                <span>Returned Payment Fees:: {product?.returned_payment_fee}</span>
+                <span className='label'>Late Penalties:</span> <span className='value'>{product?.detailed_info?.late_penalties}</span>
+                <span className='label'>Prepayment Fees:</span> <span className='value'>{product?.detailed_info?.prepayment_fee}</span>
+                <span className='label'>Returned Payment Fees:</span> <span className='value'>{product?.returned_payment_fee}</span>
               </div>
             </Grid>
             </>)
         }
 
-        <Grid className='more'>
+        <Grid className='more-less'>
           <span onClick={toggleMore}>{isExpend ? 'Show Less' : 'More'}</span>
         </Grid>
         { isExpend && (
-          <>
-            <CustomButton variant="outlined" text={"Read Full Review"}/>
-            <CustomButton variant="contained" text={"Get Offer"}/>
-          </>
+          <div className='prod-action'>
+            <CustomButton variant="outlined" text={"Read Full Review"} fullWidth/>
+            <CustomButton variant="contained" text={"Get Offer"} label="on Credello" fullWidth/>
+          </div>
         )}
       </Grid>
     </Grid>

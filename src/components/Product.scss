@@ -9,6 +9,7 @@
     padding: 24px;
 
     .col-left {
+        padding: 25px;
         text-align: left;
         h2 {
             font: normal normal bold 24px/31px Roboto;
@@ -23,17 +24,100 @@
         }
     }
 
-    .pros-cons {
-        
-        .lists {
+    .col-right {
+        padding: 25px;
+        .metrics{
             display: flex;
-            ul {
-                li {
-                    list-style: none;
-                    text-align: left;
-                    display: flex;
+            margin-bottom: 20px;
+            .btn-container {
+                margin-right: 6px;
+            }
+        }
+
+        .good-for{
+            margin-bottom: 27px;
+        }
+
+        .good-for, .pros-cons{
+            h3 {
+                text-align: left;
+                font: normal normal bold 16px/22px Roboto;
+                letter-spacing: 0px;
+                .high-light {
+                    color: #18DB95;
                 }
             }
         }
+
+        .pros-cons {
+            margin-bottom: 27px;
+            .lists {
+                display: flex;
+                ul {
+                    margin: 0px;
+                    padding: 0px;
+                    width: 50%;
+                    li {
+                        list-style: none;
+                        text-align: left;
+                        font: normal normal normal 14px/16px Roboto;
+                        letter-spacing: 0px;
+                        color: #6D7F87;
+                        margin-bottom: 10px;
+                        display: flex;
+                        svg{
+                            margin-bottom: -7px;
+                            flex: none;
+                        }
+                        span {
+                            padding-left: 10px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .qualification-requirements, .fees-penality {
+            margin-bottom: 27px;
+            h3{
+                font: normal normal bold 17px/21px Roboto;
+                letter-spacing: 0px;
+                color: #02254D;
+            }
+            .label {
+                text-align: left;
+                font: normal normal normal 15px/16px Roboto;
+                letter-spacing: 0px;
+                color: #6D7F87;
+            }
+            .value {
+                font: normal normal bold 15px/16px Roboto;
+                letter-spacing: 0px;
+                color: #02254D;
+                margin-right: 30px;
+            }
+        }
+
+
+        .prod-action{
+            display: flex;
+        }
     }
+}
+
+hr {
+    border: .5px solid var(--unnamed-color-707070);
+    border: .5px solid #707070;
+    opacity: 0.5;
+}
+
+.more-less {
+    cursor: pointer;
+    span {
+        text-decoration: underline;
+        font: normal normal bold 16px/21px Roboto;
+        letter-spacing: 0px;
+        color: #02254D;
+    }
+    margin-bottom: 25px;
 }
