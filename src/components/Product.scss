@@ -6,11 +6,17 @@
     opacity: 1;
     margin-bottom: 24px;
     width: 100%;
-    padding: 24px;
+
+    .product-container {
+        padding: 24px;
+    }
 
     .col-left {
         padding: 25px;
         text-align: left;
+        @media (max-width: 768px) {
+            text-align: center;
+        }
         h2 {
             font: normal normal bold 24px/31px Roboto;
             letter-spacing: 0px;
@@ -22,15 +28,34 @@
             width: 180px;
             margin-bottom: 15px;
         }
+        .btn-container{
+            @media (max-width: 768px) {
+                max-width: 280px;
+                margin: 0px auto;
+            }
+        }
     }
 
     .col-right {
         padding: 25px;
         .metrics{
             display: flex;
-            margin-bottom: 20px;
+            margin-bottom: 20px !important;
             .btn-container {
                 margin-right: 6px;
+            }
+            @media (max-width: 768px) {
+                min-width: 100%;
+                width: 100%;
+                flex-flow: row wrap;
+                box-sizing: border-box;
+                display: flex;
+                margin: 0px -10px -10px 0px;
+                flex-direction: row;
+                box-sizing: border-box;
+                display: flex;
+                place-content: center space-around;
+                align-items: center;
             }
         }
 

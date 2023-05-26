@@ -21,9 +21,9 @@ const Product = (props) => {
   };
   
   return (<div className={classNames('product',isExpend ? 'product-expended' : '')}>
-    <Grid container spacing={2}>
+    <Grid container spacing={2} className="product-container">
 
-      <Grid item xs={4} className="col-left">
+      <Grid item xs={12} sm={12} md={4} className="col-left">
         <h2>{product?.lender_name}</h2>
         <img
           src={product.lender_image}
@@ -33,7 +33,7 @@ const Product = (props) => {
         <CustomButton variant="contained" text={"Get Offer"} label="on Credello" fullWidth/>
       </Grid>
 
-      <Grid item xs={8} className="col-right">
+      <Grid item xs={12} sm={12} md={8} className="col-right">
         <Grid className='metrics'>
           <CustomButton variant="contained" color="secondary" text={`${product?.apr?.min}% - ${product?.apr?.max}%`} label="Est. APR Range"/>
           <CustomButton variant="contained" color="secondary" text={"$500"} label="Mo. Payment"/>

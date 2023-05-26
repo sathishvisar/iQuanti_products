@@ -7,7 +7,7 @@ import { fetch_products } from '../store/products/action';
 import Product from '../components/Product'
 import Header from '../components/Header'
 
-import './ProductContainer.scss'
+import './ProductsContainer.scss'
 
 class Products extends React.Component {
 
@@ -54,7 +54,7 @@ class Products extends React.Component {
     ));
   }
   render() {
-    return <div className='product-container'>
+    return <div className='products-container'>
 
       <Header selectedOption={this.state.selectedOption} handleFilterChange={this.handleFilterChange}/>
 
