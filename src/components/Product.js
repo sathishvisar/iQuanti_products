@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import IconDone from "./icons/IconDone"
-import './Product.scss'
+import CustomButton from "./shared/CustomButton"
 
+import './Product.scss'
 
 const Product = (props) => {
   const { product } = props;
@@ -20,17 +20,19 @@ const Product = (props) => {
   
   return (<div className={classNames('product',isExpend ? 'product-expended' : '')}>
     <Grid container spacing={2}>
-      <Grid item xs={4}>
+
+      <Grid item xs={4} className="col-left">
         <h2>{product?.lender_name}</h2>
         <img
           src={product.lender_image}
           alt={product.lender_name}
           loading="lazy"
-          height={"50px"}
         />
+        <CustomButton variant="contained" text={"Get Offer"} fullWidth/>
+        <span className='btn-label'>on Credello</span>
       </Grid>
-      <Grid item xs={8}>
 
+      <Grid item xs={8} className="col-right">
         <Grid className='metrics'>
           <span>{product?.apr?.min}% - {product?.apr?.max}%</span>
           <span>$500</span>
@@ -87,8 +89,8 @@ const Product = (props) => {
         </Grid>
         { isExpend && (
           <>
-            <Button variant="outlined" size="large">Read Full Review</Button>
-            <Button variant="contained" size="large">Get Offer</Button>
+            <CustomButton variant="outlined" text={"Read Full Review"}/>
+            <CustomButton variant="contained" text={"Get Offer"}/>
           </>
         )}
       </Grid>

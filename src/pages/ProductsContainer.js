@@ -63,7 +63,7 @@ class Products extends React.Component {
           <CircularProgress />
         </div>
       ) : (
-        <Grid container maxWidth="lg" className='product-list'>
+        <Grid container maxWidth="md" className='product-list'>
           {this.renderFilteredProducts()}
         </Grid>
       )}

@@ -1,4 +1,3 @@
-import './App.css';
 import ProductContainer from './pages/ProductsContainer'
 
 function App() {
