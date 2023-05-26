@@ -1,11 +1,12 @@
+import React from 'react'
 import ProductContainer from './pages/ProductsContainer'
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-     <ProductContainer />
+      <ProductContainer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

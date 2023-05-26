@@ -1,5 +1,5 @@
-import Store from './store';
+import Store from './store'
 
-const store = Store();
+const store = Store()
 
-export const AppStore = store;
+export const AppStore = store
