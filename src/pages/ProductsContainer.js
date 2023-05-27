@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -10,83 +10,79 @@ import Header from '../components/Header'
 
 import './ProductsContainer.scss'
 
-class Products extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedOption: 'Monthly Payment'
-    }
+const Products = ({ productsData, productsLoading, fetchProducts }) => {
+  const [selectedOption, setSelectedOption] = useState('Monthly Payment')
 
-    this.handleFilterChange = this.handleFilterChange.bind(this)
+  const handleFilterChange = (value) => {
+    setSelectedOption(value)
   }
 
-  handleFilterChange (value) {
-    this.setState({
-      selectedOption: value
-    })
-  }
-
-  componentDidMount () {
+  useEffect(() => {
     document.title = 'iQuanti (Products)'
-    this.props.FetchProducts()
-  }
+    fetchProducts()
+  }, [fetchProducts])
 
-  renderFilteredProducts () {
-    const { productsData } = this.props
-
+  const renderFilteredProducts = React.useMemo(() => {
     if (!productsData) {
       return null
     }
 
-    // Sort the productsData array based on the sortKey
     const sortedProducts = productsData.slice().sort((a, b) => {
-      if (this.state.selectedOption === 'APR Min') {
+      if (selectedOption === 'APR Min') {
         return a.apr.min - b.apr.min
-      } else if (this.state.selectedOption === 'APR Max') {
+      } else if (selectedOption === 'APR Max') {
         return a.apr.max - b.apr.max
-      } else if (this.state.selectedOption === 'Origination Fee') {
+      } else if (selectedOption === 'Origination Fee') {
         return a.origination_fee.min - b.origination_fee.min
       }
-      return a - b
+      return 0
     })
 
     return sortedProducts.map((item, index) => (
       <Product product={item} key={index} />
     ))
-  }
+  }, [productsData, selectedOption])
 
-  render () {
-    return <div className='products-container'>
+  return (
+    <div className='products-container'>
+      <Header
+        selectedOption={selectedOption}
+        handleFilterChange={handleFilterChange}
+      />
 
-      <Header selectedOption={this.state.selectedOption} handleFilterChange={this.handleFilterChange}/>
-
-      {this.props?.productsLoading
+      {productsLoading
         ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh'
+          }}
+        >
           <CircularProgress />
-        </div>
-          )
+        </div>)
         : (
-        <Grid container maxWidth="md" className='product-list'>
-          {this.renderFilteredProducts()}
-        </Grid>
+          <Grid container maxWidth="md" className="product-list">
+            {renderFilteredProducts}
+          </Grid>
           )}
-
     </div>
-  }
+  )
 }
 
 const mapStateToProps = (state) => {
   return { ...state.products }
 }
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    FetchProducts: () => dispatch(FetchProducts())
+    fetchProducts: () => dispatch(FetchProducts())
   }
 }
 
 Products.propTypes = {
-  FetchProducts: PropTypes.func.isRequired,
+  fetchProducts: PropTypes.func.isRequired,
   productsData: PropTypes.array.isRequired,
   productsLoading: PropTypes.bool.isRequired
 }

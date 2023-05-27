@@ -9,100 +9,104 @@ import CustomButton from './shared/CustomButton'
 
 import './Product.scss'
 
-const Product = (props) => {
-  const { product } = props
-
+const Product = ({ product }) => {
   const pros = (product?.detailed_info?.pro && product?.detailed_info?.pro.split('|\n')) || []
   const cons = (product?.detailed_info?.con && product?.detailed_info?.con.split('|\n')) || []
 
-  const [isExpend, setIsExpend] = useState(false)
+  const [isExpand, setIsExpand] = useState(false)
 
   const toggleMore = () => {
-    setIsExpend(!isExpend)
+    setIsExpand(!isExpand)
   }
 
-  return (<div className={classNames('product', isExpend ? 'product-expended' : '')}>
-    <Grid container spacing={2} className="product-container">
+  const renderPros = React.useMemo(() => {
+    return pros.map((pro, index) => (
+      <li key={index}>
+        <IconDone color="#6d7f87" />
+        <span>{pro}</span>
+      </li>
+    ))
+  }, [pros])
 
-      <Grid item xs={12} sm={12} md={4} className="col-left">
-        <h2>{product?.lender_name}</h2>
-        <img
-          src={product.lender_image}
-          alt={product.lender_name}
-          loading="lazy"
-        />
-        <CustomButton variant="contained" text={'Get Offer'} label="on Credello" fullWidth/>
-      </Grid>
+  const renderCons = React.useMemo(() => {
+    return cons.map((con, index) => (
+      <li key={index}>
+        <IconClose color="#6d7f87" />
+        <span>{con}</span>
+      </li>
+    ))
+  }, [cons])
 
-      <Grid item xs={12} sm={12} md={8} className="col-right">
-        <Grid className='metrics'>
-          <CustomButton variant="contained" color="secondary" text={`${product?.apr?.min}% - ${product?.apr?.max}%`} label="Est. APR Range"/>
-          <CustomButton variant="contained" color="secondary" text={'$500'} label="Mo. Payment"/>
-          <CustomButton variant="contained" color="secondary" text={product?.origination_fee?.min} label="Origination Fee"/>
-        </Grid>
+  return (
+    <>
+      <div className={classNames('product', { 'product-expended': isExpand })}>
+        <Grid container spacing={2} className="product-container">
+          <Grid item xs={12} sm={12} md={4} className="col-left">
+            <h2>{product?.lender_name}</h2>
+            <img src={product.lender_image} alt={product.lender_name} loading="lazy" />
+            <CustomButton variant="contained" text={'Get Offer'} label="on Credello" fullWidth />
+          </Grid>
 
-        <Grid className='good-for'>
-          <h3><span className='high-light'>Good For:</span> {product?.best_for}</h3>
-        </Grid>
+          <Grid item xs={12} sm={12} md={8} className="col-right">
+            <Grid className="metrics">
+              <CustomButton variant="contained" color="secondary" text={`${product?.apr?.min}% - ${product?.apr?.max}%`} label="Est. APR Range" />
+              <CustomButton variant="contained" color="secondary" text={'$500'} label="Mo. Payment" />
+              <CustomButton variant="contained" color="secondary" text={product?.origination_fee?.min} label="Origination Fee" />
+            </Grid>
 
-        <Grid className='pros-cons'>
-          <h3><span className='high-light'>Pros & Cons</span></h3>
-          <div className='lists'>
-            <ul>
-              {isExpend
-                ? (
-                    pros.map((pro) => <li key={pro}><IconDone color="#6d7f87"/> <span>{pro}</span></li>)
-                  )
-                : (
-                <li><IconDone color="#6d7f87"/><span>{pros[0]}</span></li>
-                  )}
-            </ul>
-            <ul>
-              {isExpend
-                ? (
-                    cons.map((con) => <li key={con}><IconClose color="#6d7f87"/> <span>{con}</span></li>)
-                  )
-                : (
-                <li><IconClose color="#6d7f87"/> <span>{cons[0]}</span></li>
-                  )}
-            </ul>
-          </div>
-        </Grid>
+            <Grid className="good-for">
+              <h3>
+                <span className="high-light">Good For:</span> {product?.best_for}
+              </h3>
+            </Grid>
 
-        {
-          isExpend && (<>
-            <hr/>
-            <Grid className='qualification-requirements'>
-              <h3>Qualification Requirements</h3>
-              <div>
-                <span className='label'>Min. Credit Score:</span> <span className='value'>{product?.detailed_info?.min_credit_score}</span>
-                <span className='label'>Max. DTI ratio:<IconAskQuestion /></span> <span className='value'>{product?.detailed_info?.max_debt_income_ratio}</span>
+            <Grid className="pros-cons">
+              <h3>
+                <span className="high-light">Pros & Cons</span>
+              </h3>
+              <div className="lists">
+                <ul>{isExpand ? renderPros : <li><IconDone color="#6d7f87" /><span>{pros[0]}</span></li>}</ul>
+                <ul>{isExpand ? renderCons : <li><IconClose color="#6d7f87" /><span>{cons[0]}</span></li>}</ul>
               </div>
             </Grid>
-            <hr/>
-            <Grid className='fees-penality'>
-              <h3>Fees & Penality</h3>
-              <div>
-                <span className='label'>Late Penalties:</span> <span className='value'>{product?.detailed_info?.late_penalties}</span>
-                <span className='label'>Prepayment Fees:</span> <span className='value'>{product?.detailed_info?.prepayment_fee}</span>
-                <span className='label'>Returned Payment Fees:</span> <span className='value'>{product?.returned_payment_fee}</span>
-              </div>
-            </Grid>
-            </>)
-        }
 
-        <Grid className='more-less'>
-          <span onClick={toggleMore}>{isExpend ? 'Show Less' : 'More'}</span>
+            {isExpand && (
+              <>
+                <hr />
+                <Grid className="qualification-requirements">
+                  <h3>Qualification Requirements</h3>
+                  <div>
+                    <span className="label">Min. Credit Score:</span> <span className="value">{product?.detailed_info?.min_credit_score}</span>
+                    <span className="label">Max. DTI ratio:<IconAskQuestion /></span> <span className="value">{product?.detailed_info?.max_debt_income_ratio}</span>
+                  </div>
+                </Grid>
+                <hr />
+                <Grid className="fees-penality">
+                  <h3>Fees & Penalties</h3>
+                  <div>
+                    <span className="label">Late Penalties:</span> <span className="value">{product?.detailed_info?.late_penalties}</span>
+                    <span className="label">Prepayment Fees:</span> <span className="value">{product?.detailed_info?.prepayment_fee}</span>
+                    <span className="label">Returned Payment Fees:</span> <span className="value">{product?.returned_payment_fee}</span>
+                  </div>
+                </Grid>
+              </>
+            )}
+
+            <Grid className="more-less">
+              <span onClick={toggleMore}>{isExpand ? 'Show Less' : 'More'}</span>
+            </Grid>
+
+            {isExpand && (
+              <div className="prod-action">
+                <CustomButton variant="outlined" text={'Read Full Review'} fullWidth />
+                <CustomButton variant="contained" text={'Get Offer'} label="on Credello" fullWidth />
+              </div>
+            )}
+          </Grid>
         </Grid>
-        { isExpend && (
-          <div className='prod-action'>
-            <CustomButton variant="outlined" text={'Read Full Review'} fullWidth/>
-            <CustomButton variant="contained" text={'Get Offer'} label="on Credello" fullWidth/>
-          </div>
-        )}
-      </Grid>
-    </Grid>
-  </div>)
+      </div>
+    </>
+  )
 }
 
 Product.propTypes = {
